@@ -19,10 +19,12 @@ var empty = null;
 //undefined
 var nothing
 
-//Symbol
+//Symbol 
+//변경 불가능한 자료형. 참조형의 키(key)로도 사용 가능
 var sym = Symbol('me');
 
 //객체(object)
+//키:값 형태로 키는 반드시 String 형태
 var item = {
     price: 5000,
     count: 10
