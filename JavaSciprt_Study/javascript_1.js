@@ -1,0 +1,1 @@
+//2021.10.24 javascript study 
