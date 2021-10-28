@@ -76,3 +76,18 @@ console.log('counter 1의 값 : ' + counter1.getCount());
 
 counter2.increase();
 console.log('counter 2의 값 : ' + counter2.getCount());
+
+
+
+
+
+function count() {
+    var i;
+    for (i = 1; i < 10; i += 1) {
+        console.log(i);
+        setTimeout(function timer() {
+            console.log(i);
+        }, i*1000);
+    }
+}
+count();
