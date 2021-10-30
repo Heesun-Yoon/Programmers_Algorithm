@@ -86,9 +86,93 @@ function count() {
     for (i = 1; i < 10; i += 1) {
         console.log(i);
         setTimeout(function timer() {
-            console.log(i);
+            //맨 마지막에 실행됨
+            // console.log(i);
         }, i*1000);
     }
 }
 count();
 
+
+
+
+/*
+     chapter 49. 생성자 함수
+*/
+
+//생성자 함수는 앞에 new 키워드가 붙으며 함수명은 대문자로 시작해야 한다.
+//반환되는 객체의 초기 상태와 행위 정의할 수 있음
+
+function Teacher(name, age, subject) {
+    this.name = name;
+    this.age = age;
+    this.subject = subject;
+    this.teach = function (student) {
+        console.log(student + '에게' + this.subject + '를 가르칩니다.');
+    };
+}
+
+//생성자 함수 호출
+const jay = new Teacher('jay',30,'JavaScript');
+//Teacher {name: 'jay', age: 30, subject: 'JavaScript', teach: ƒ}
+console.log(jay);
+//bbo에게JavaScript를 가르칩니다.
+jay.teach('bbo');
+
+
+console.log(jay.constructor);
+console.log(jay instanceof Teacher);
+
+const jay2 = Teacher('jay',30,'JavaScript');
+//undefined
+console.log(jay2);
+//30 (전역변수의 age를 참조해 출력)
+console.log(age);
+
+
+
+/*
+     chapter 50. 생성자 함수
+*/
+
+//생성자 함수로부터 만들어진 객체는 그 생성자 함수의 프로토타입 객체를 상속
+ 
+//생성자 함수 정의. 내부 속성으로 dataStore 가지고 빈 객체 할당
+function Storage() {
+    this.dataStore = {};
+}
+
+//Stroge 생성자 함수의 프로토타입 객체에 put 메소드 추가. put 메소드는 주어진 키에 해당하는 값을 dataStore 속성에 할당
+Storage.prototype.put = function(key, data) {
+    this.dataStore[key] = data;
+}
+
+//Stroge 생성자 함수의 프로토타입 객체에 getData 메소드 추가. getData 메소드는 매개변수의 값을 키로 해서 dataStroe 속성에서 찾아 반환
+Storage.prototype.getData = function(key) {
+    return this.dataStore[key];
+}
+
+//생성자 호출
+const productStorage = new Storage();
+//key <-> value 값 형태
+productStorage.put('id001', {name: '키보드', price: 2000});
+//{name: '키보드', price: 2000}
+console.log(productStorage.getData('id001'));
+
+//remover 생성자 함수의 this에 Storage 생성자 함수에서 정의한 대로 dataStroe가 속성으로 추가됨
+function Remover() {
+    Storage.call(this);
+}
+
+//Storage 함수의 프로토타입 객체가 remover 함수의 프로토타입 객체의 __proto__에 할당 > 두 프로토타입이 상속 관계 형성
+Remover.prototype = Object.create(Storage.prototype);
+//remover 생성자 함수의 프로토타입 객체에 removerAll 메소드 추가
+Remover.prototype.removerAll = function() {
+    this.dataStore = {}
+}
+
+const productStorage2 = new Remover();
+productStorage2.put('id001', {name: '키보드', price: 2000});
+productStorage2.removerAll();
+const item2 = productStorage2.getData('id001');
+console.log('마지막' + item2);
