@@ -2,6 +2,6 @@ package question;
 
 public class Question03 {
 	
-//	완전탐색 > 모의고사
+//로또의 최고 순위와 최저 순위
 
 }
